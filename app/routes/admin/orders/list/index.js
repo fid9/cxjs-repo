@@ -19,8 +19,6 @@ import Controller from './Controller';
 import {applyOuterLayout} from 'app/layouts/dynamicLayout';
 
 
-
-
 export default <cx>
     <main class="csb-orderlist" controller={Controller}>
         <div putInto="header">
