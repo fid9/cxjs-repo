@@ -16,7 +16,7 @@ export default <cx>
             </ul>
             <LookupField
                 label="Select the continent: "
-                // records-bind="$page.continents"
+                vlines
                 value-bind="$page.clicked"
                 text-bind="$page.text"
                 options-bind="$page.options"
@@ -28,50 +28,41 @@ export default <cx>
         <Window
             visible={{ bind: "$page.contact.visible", defaultValue: false }}
             center
-            style={{ width: "500px" }}
+            style={{ width: "400px" }}
             modal
           >
             <div
-              style={{ padding: "20px" }}
+              style={{ padding: "40px" }}
               layout={{ type: LabelsLeftLayout, mod: "stretch" }}
             >
-              <Text tpl='{$page.country|guest}' />
-              <Text tpl='{$page.capital|guest}' />
-              <Text tpl='{$page.continent|guest}' />
-              <Text tpl='{$page.population|guest}' />
-              <Text tpl='{$page.languages|guest}' />
+              <Text tpl='Country name: {$page.country|Not Found!}' />
+              <Text tpl='Capital: {$page.capital|Not Found!}' />
+              <Text tpl='Continent: {$page.continent|Not Found!}' />
+              <Text tpl='Population: {$page.population|Not Found!}' />
+              <Text tpl='Languages: {$page.languages|Not Found!}' />
             </div>
       </Window>
       
       <div> 
             <Grid records-bind='$page.records'
                 onRowClick={(e, { store }) => {
-                    // store.get('$page.records').filter(
-                    //   i=>{
-                    //     if(Object.values(store.get('$page.records')[i]).indexOf(store.get('$page.selection')) > -1){
-                    //       let countryName = 'Country: ' + this.store.get('$page.records')[i]['countryName'];
-                    //       this.store.set("$page.country", countryName);
-                    //       let capital = 'Capital: ' + this.store.get('$page.records')[i]['capital'];
-                    //       this.store.set("$page.capital", capital);
-                    //       let continent = 'Continent: ' + this.store.get('$page.records')[i]['continent'];
-                    //       this.store.set("$page.continent", continent);
-                    //       let population = 'Population: ' + this.store.get('$page.records')[i]['population'];
-                    //       this.store.set("$page.population", population);
-                    //       let languages = 'Languages: ' + this.store.get('$page.records')[i]['languages'];
-                    //       this.store.set("$page.languages", languages);
-                    //     }
-                    //   }
-                    // )
-                    //console.log(store.get('$page.selection'));
-                    //console.log(store.get('$page.selection'));
+                      const result = store.get('$page.records').filter(rec => {
+                        if(rec.id === store.get('$page.selection')) return rec;
+                      })
+                    store.set('$page.country', result["0"].countryName)
+                    store.set('$page.capital', result["0"].capital)
+                    store.set('$page.continent', result["0"].continent)
+                    store.set('$page.population', result["0"].population)
+                    store.set('$page.languages', result["0"].languages)
+
                     store.set("$page.contact.visible", true);
                     }}
                     mod="orders"
                     class="flex1"
                     scrollable
                     sortable
-                    border={false}  
-                    lockColumnWidths     
+                    resizable = {"true"}
+                    border={false}      
                     columns={[
                     { header: 'Country Name', field: 'countryName', sortable: true, aggregate: 'count', footer: { tpl: '{$group.fullName} {$group.fullName:plural;person}' } },
                     { header: 'Capital', field: 'capital', sortable: true, aggregate: 'distinct', aggregateField: 'continents', footer: { tpl: '{$group.continents} {$group.continents:plural;continent}' } },
