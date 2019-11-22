@@ -15,6 +15,7 @@ export default <cx>
                 <li class="cse-breadcrumb-item">Country Informations</li>
             </ul>
             <LookupField
+            
                 label="Select the continent: "
                 vlines
                 value-bind="$page.clicked"
@@ -26,13 +27,14 @@ export default <cx>
         </div>
         
         <Window
+            title = "REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
             visible={{ bind: "$page.contact.visible", defaultValue: false }}
             center
             style={{ width: "400px" }}
             modal
           >
             <div
-              style={{ padding: "40px" }}
+              style={{ padding: "20px" }}
               layout={{ type: LabelsLeftLayout, mod: "stretch" }}
             >
               <Text tpl='Country name: {$page.country|Not Found!}' />
@@ -60,6 +62,8 @@ export default <cx>
                     mod="orders"
                     class="flex1"
                     scrollable
+                    lockColumnWidths
+                    vlines
                     sortable
                     resizable = {"true"}
                     border={false}      
